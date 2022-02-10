@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<style>
+    #map {
+        width: 75%;
+        height: 75%;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+<body>
+
+    <div id="map"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+        crossorigin="anonymous"></script>
+    <script async
+        src="https://maps.googleapis.com/maps/api/js?key={key}&callback=initMap"></script>
+    <script>
+
+        let map;
+        let marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 39.29853206558392, lng: -76.63457035660831 },
+                zoom: 12,
+            });
+
+            const svgMarker = {
+                path: "M10.453 14.016l6.563-6.609-1.406-1.406-5.156 5.203-2.063-2.109-1.406 1.406zM12 2.016q2.906 0 4.945 2.039t2.039 4.945q0 1.453-0.727 3.328t-1.758 3.516-2.039 3.070-1.711 2.273l-0.75 0.797q-0.281-0.328-0.75-0.867t-1.688-2.156-2.133-3.141-1.664-3.445-0.75-3.375q0-2.906 2.039-4.945t4.945-2.039z",
+                fillOpacity: .9,
+                strokeWeight: 0,
+                rotation: 0,
+                scale: 2.5,
+                anchor: new google.maps.Point(15, 30),
+            };
+
+
+            /*{ "lat": 39.29412088806377, "lng": -76.60986166348039 }
+            { "lat": 39.29172955385792, "lng": -76.61501150478898 }
+            { "lat": 39.288540981209316, "lng": -76.60436849941789 }*/
+
+
+
+            const jobsArray = [
+                {
+                    day: "Wednesday",
+                    jobId: "1",
+                    position: {
+                        lat: 39.298797747602784,
+                        lng: -76.63954853653995
+                    }
+                },
+                {
+                    day: "Monday",
+                    jobId: "2",
+                    position: {
+                        lat: 39.28883398184755,
+                        lng: -76.64984821915714
+                    }
+                },
+                {
+                    day: "Monday",
+                    jobId: "3",
+                    position:
+                    {
+                        lat: 39.29226096851707,
+                        lng: -76.6273711239296
+                    }
+
+                },
+                {
+                    day: "Tuesday",
+                    jobId: "4",
+                    position: {
+                        lat: 39.29972762672839,
+                        lng: -76.57946705460635
+                    }
+                },
+                {
+                    day: "Tuesday",
+                    jobId: "5",
+                    position: {
+                        lat: 39.29866490671935,
+                        lng: -76.57045483231632
+                    }
+                },
+                {
+                    day: "Tuesday",
+                    jobId: "6",
+                    position: { lat: 39.30687329113548, lng: -76.56007986416398 }
+                },
+                {
+                    day: "Wednesday",
+                    jobId: "7",
+                    position:
+                        { lat: 39.257444789705744, lng: -76.52609091152726 }
+
+                },
+                {
+                    day: "Wednesday",
+                    jobId: "8",
+                    position: { lat: 39.25345710048584, lng: -76.51407461514054 }
+                },
+                {
+                    day: "Wednesday",
+                    jobId: "9",
+                    position: { lat: 39.247608079380164, lng: -76.53038244595109 }
+                },
+                {
+                    day: "Thursday",
+                    jobId: "10",
+                    position: { lat: 39.25000091970767, lng: -76.65603857388078 }
+                },
+                {
+                    day: "Thursday",
+                    jobId: "11",
+                    position: { lat: 39.2401631651397, lng: -76.65586691250383 }
+                },
+                {
+                    day: "Thursday",
+                    jobId: "12",
+                    position: { lat: 39.2377699891746, lng: -76.64213400234758 }
+                },
+                {
+                    day: "Friday",
+                    jobId: "13",
+                    position: { lat: 39.31749851897353, lng: -76.60917501797258 }
+                },
+                {
+                    day: "Friday",
+                    jobId: "14",
+                    position: { lat: 39.31696729590155, lng: -76.60127859463273 }
+                },
+                {
+                    day: "Friday",
+                    jobId: "15",
+                    position: { lat: 39.31457674215994, lng: -76.61672811855851 }
+                },
+            ];
+
+            jobsArray.forEach(job => {
+
+                switch (job.day) {
+                    case "Monday":
+                        svgMarker.fillColor = "red";
+                        break;
+                    case "Tuesday":
+                        svgMarker.fillColor = "green";
+                        break;
+                    case "Wednesday":
+                        svgMarker.fillColor = "blue";
+                        break;
+                    case "Thursday":
+                        svgMarker.fillColor = "pink";
+                        break;
+                    case "Friday":
+                        svgMarker.fillColor = "orange";
+                        break;
+                    case "Saturday":
+                        svgMarker.fillColor = "purple";
+                        break;
+                    case "Sunday":
+                        svgMarker.fillColor = "yellow";
+                        break;
+                }
+
+                marker = new google.maps.Marker({
+                    position: job.position,
+                    map: map,
+                    icon: svgMarker,
+                    title: job.jobId,
+                });
+
+                marker.addListener('click', function () {
+                    alert(job.jobId);
+                });
+            });
+
+        }
+
+
+    </script>
+
+</body>
+
+
+</html>
